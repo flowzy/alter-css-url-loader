@@ -13,11 +13,17 @@ Allows for a more custom altering of CSS's `url()` paths.
 
 To begin, you'll need to install `alter-css-url-loader`:
 
-```cmd
-$ npm install @flowzy/alter-css-url-loader webpack --save-dev
+```bash
+$ npm install alter-css-url-loader webpack --save-dev
 ```
 
-Chain the `alter-css-url-loader` directly after [sass-loader](https://github.com/webpack-contrib/sass-loader) if you're using Sass.
+or
+
+```bash
+$ yarn add alter-css-url-loader webpack --dev
+```
+
+Chain the `alter-css-url-loader` directly after [sass-loader](https://github.com/webpack-contrib/sass-loader), if you're using Sass.
 
 ## Example
 
