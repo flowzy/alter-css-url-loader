@@ -21,6 +21,7 @@ export default function loader(content) {
   }
 
   const urls = content.match(/url\(.*?\)/gi)
+  let alter = null
 
   // for when the usage of the plugin is for reddit,
   // provide a built-in "alter" function for
@@ -30,7 +31,7 @@ export default function loader(content) {
       throw new Error(message(`cannot use property "reddit" together with "alter".`))
     }
 
-    options.alter = function(path) {
+    alter = function(path) {
       if (!options.reddit) {
         return path
       }
@@ -43,11 +44,12 @@ export default function loader(content) {
     }
   }
 
-  urls.map(url => {
+  urls.map((url) => {
     // remove url() from the match and leave only the path itself
     const stripped = url.replace(/^url\(/, '').replace(/\)$/, '')
+    const func = alter !== null ? alter : options.alter
 
-    content = content.replace(stripped, options.alter(stripped))
+    content = content.replace(stripped, func(stripped))
   })
 
   return content
