@@ -1,0 +1,12 @@
+{
+  "type": "object",
+  "properties": {
+    "reddit": {
+      "type": "boolean"
+    },
+    "alter": {
+      "instanceof": "Function"
+    }
+  },
+  "additionalProperties": false
+}
