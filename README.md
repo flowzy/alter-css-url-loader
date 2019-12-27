@@ -55,13 +55,13 @@ module.exports = {
                 return url.replace('./', '../')
               },
             },
-          }
+          },
           // compiles Sass to CSS
           'sass-loader',
-        ]
-      }
-    ]
-  }
+        ],
+      },
+    ],
+  },
 }
 ```
 
