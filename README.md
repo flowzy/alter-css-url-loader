@@ -3,6 +3,15 @@
     <img width="200" height="200"
       src="https://webpack.js.org/assets/icon-square-big.svg">
   </a>
+
+<!-- prettier-ignore -->
+  [![npm][npm]][npm-url]
+  [![node][node]][node-url]
+  [![travis][travis]][travis-url]
+  [![coverage][coverage]][coverage-url]
+  [![downloads][downloads]][npm-url]
+  [![license][license]][license-url]
+
 </div>
 
 # alter-css-url-loader
@@ -86,3 +95,15 @@ Example: `./img/headers/header-1.jpg` => `%%header-1%%`
 ## License
 
 [MIT](./LICENSE)
+
+[npm]: https://img.shields.io/npm/v/alter-css-url-loader
+[npm-url]: https://npmjs.com/package/alter-css-url-loader
+[node]: https://img.shields.io/node/v/alter-css-url-loader
+[node-url]: https://nodejs.org
+[travis]: https://img.shields.io/travis/flowzy/alter-css-url-loader
+[travis-url]: https://travis-ci.org/flowzy/alter-css-url-loader
+[coverage]: https://coveralls.io/repos/github/flowzy/alter-css-url-loader/badge.svg?branch=master
+[coverage-url]: https://coveralls.io/github/flowzy/alter-css-url-loader?branch=master
+[downloads]: https://img.shields.io/npm/dt/alter-css-url-loader
+[license]: https://img.shields.io/npm/l/alter-css-url-loader
+[license-url]: ./LICENSE
