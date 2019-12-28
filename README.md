@@ -81,7 +81,7 @@ Determines whether a built-in function for transforming urls for Reddit should b
 
 Example: `./img/headers/header-1.jpg` => `%%header-1%%`
 
-> Note: this option cannot be used together with `alter`.
+> Note: this option, if set to "true", cannot be used together with `alter`.
 
 ## License
 

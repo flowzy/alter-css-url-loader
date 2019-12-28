@@ -1,2 +1,8 @@
 .vscode/
 node_modules/
+test/
+src/
+coverage/
+
+*.config.js
+.editorconfig

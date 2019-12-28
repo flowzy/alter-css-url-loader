@@ -14,9 +14,11 @@ export default function loader(content) {
 
   validateOptions(schema, options, { name: LOADER_NAME })
 
-  if (typeof options.alter !== 'function' && typeof options.reddit !== 'boolean') {
+  if (typeof options.alter !== 'function' && options.reddit !== true) {
     throw new TypeError(
-      message(`property "alter" inside of "options" must be a function - ${typeof options.alter} given.`)
+      message(
+        `property "alter" inside of "options" must be a function - ${typeof options.alter} given.`
+      )
     )
   }
 
@@ -26,16 +28,12 @@ export default function loader(content) {
   // for when the usage of the plugin is for reddit,
   // provide a built-in "alter" function for
   // readying urls for Reddit
-  if (typeof options.reddit === 'boolean') {
+  if (options.reddit === true) {
     if (typeof options.alter === 'function') {
       throw new Error(message(`cannot use property "reddit" together with "alter".`))
     }
 
-    alter = function(path) {
-      if (!options.reddit) {
-        return path
-      }
-
+    alter = (path) => {
       const split = path.split('/')
       const last = split[split.length - 1]
       const name = last.slice(0, last.lastIndexOf('.'))
