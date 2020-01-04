@@ -6,11 +6,13 @@ module.exports = (api) => {
 
   return {
     presets: [
+      '@babel/preset-typescript',
+      'minify',
       [
         '@babel/preset-env',
         {
           targets: {
-            node: '6.9.0',
+            node: '8.9.0',
           },
         },
       ],
