@@ -26,7 +26,7 @@ export default function loader(content: string): string {
   if (options.reddit === true) {
     if (typeof options.alter === 'function') throw new TypeError(errors.alterWithReddit())
 
-    options.alter = (url): string => {
+    options.alter = (url) => {
       const filename = url.substr(url.lastIndexOf('/') + 1)
       const name = filename.substr(0, filename.lastIndexOf('.'))
 

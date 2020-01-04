@@ -1,10 +1,11 @@
 .vscode/
+coverage/
+src/
 node_modules/
 test/
-src/
-coverage/
 types/
 
-*.config.js
+.*rc.js
 *.yml
-.editorconfig
+.eslintignore
+tsconfig.json

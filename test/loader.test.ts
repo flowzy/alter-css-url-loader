@@ -51,7 +51,7 @@ describe('option usage', () => {
     await expect(
       compile({
         reddit: false,
-        alter: (url: string) => url.replace('../', '../../'),
+        alter: (url) => url.replace('../', '../../'),
       })
     ).resolves.toMatch(getExpectedResult('alter'))
   })

@@ -1,6 +1,6 @@
 import path from 'path'
 import webpack from 'webpack'
-import memoryfs from 'memory-fs'
+import MemoryFileSystem from 'memory-fs'
 
 export default (
   fixture: string,
@@ -35,7 +35,7 @@ export default (
     },
   })
 
-  compiler.outputFileSystem = new memoryfs()
+  compiler.outputFileSystem = new MemoryFileSystem()
 
   return new Promise((resolve, reject) => {
     compiler.run((err, stats) => {
