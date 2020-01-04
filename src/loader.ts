@@ -5,10 +5,9 @@ import { JSONSchema4 } from 'schema-utils/declarations/validate'
 import config from '../package.json'
 import errors from './config/errors'
 import schema from './schema.json'
-import { LoaderOptionsInterface } from './typings'
 
 export default function loader(content: string): string {
-  const options = getOptions(this) as LoaderOptionsInterface
+  const options = getOptions(this) as alterCssUrlLoader.Options
 
   validateOptions(schema as JSONSchema4, options, { name: config.name })
 

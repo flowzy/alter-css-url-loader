@@ -2,11 +2,9 @@ import path from 'path'
 import webpack from 'webpack'
 import memoryfs from 'memory-fs'
 
-import { LoaderOptionsInterface } from '../../src/typings'
-
 export default (
   fixture: string,
-  options = {} as LoaderOptionsInterface
+  options = {} as alterCssUrlLoader.Options
 ): Promise<Error | webpack.Stats> => {
   const compiler = webpack({
     context: __dirname,

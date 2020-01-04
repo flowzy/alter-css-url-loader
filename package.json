@@ -16,10 +16,10 @@
   "scripts": {
     "prepare": "install-peers",
     "clean": "del-cli dist",
-    "compile": "cross-env NODE_ENV=production babel src -d dist --extensions '.ts' --no-comments --copy-files --ignore src/typings && del-cli dist/typings",
+    "compile": "cross-env NODE_ENV=production babel src -d dist --extensions '.ts' --no-comments --copy-files",
     "build": "npm run clean && npm run compile",
     "test": "jest --detectOpenHandles --config .jestrc.js",
-    "coveralls": "npm run test --coverage && cat ./coverage/lcov.info | coveralls",
+    "coveralls": "npm run test -- --coverage && cat ./coverage/lcov.info | coveralls",
     "lint": "tsc --noEmit && eslint '*/**/*.{js,ts}' --quiet --fix"
   },
   "husky": {

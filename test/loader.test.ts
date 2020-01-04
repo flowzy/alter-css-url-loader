@@ -3,7 +3,6 @@ import path from 'path'
 import webpack from 'webpack'
 
 import compiler from './setup/compiler'
-import { LoaderOptionsInterface } from '../src/typings'
 
 const getExpectedResult = (name: string): string => {
   return JSON.stringify(
@@ -11,7 +10,7 @@ const getExpectedResult = (name: string): string => {
   )
 }
 
-const compile = async (options?: LoaderOptionsInterface): Promise<string> => {
+const compile = async (options?: alterCssUrlLoader.Options): Promise<string> => {
   const stats = (await compiler('sample.css', options)) as webpack.Stats
   return stats.toJson().modules[0].source
 }

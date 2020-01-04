@@ -1,8 +1,7 @@
-import { Messages, Errors } from '../typings'
 import { message } from './helpers'
 
-const errors: Errors = {}
-const messages: Messages = {
+const errors: alterCssUrlLoader.Errors = {}
+const messages: alterCssUrlLoader.Messages = {
   alterWithReddit: 'cannot use property "reddit" together with "alter".',
   alterMustBeFunction: 'property "alter" inside of "options" must be a function - %s given.',
 }
