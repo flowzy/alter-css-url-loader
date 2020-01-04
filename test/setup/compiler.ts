@@ -2,10 +2,15 @@ import path from 'path'
 import webpack from 'webpack'
 import memoryfs from 'memory-fs'
 
-export default (fixture, options = {}) => {
+import { LoaderOptionsInterface } from '../../src/typings'
+
+export default (
+  fixture: string,
+  options = {} as LoaderOptionsInterface
+): Promise<Error | webpack.Stats> => {
   const compiler = webpack({
     context: __dirname,
-    entry: `./css/${fixture}`,
+    entry: `../css/${fixture}`,
     output: {
       path: path.resolve(__dirname),
       filename: 'bundle.css',
@@ -23,7 +28,7 @@ export default (fixture, options = {}) => {
             },
 
             {
-              loader: path.resolve(__dirname, '../src/loader.js'),
+              loader: path.resolve(__dirname, '../../src/loader.ts'),
               options,
             },
           ],
@@ -37,7 +42,7 @@ export default (fixture, options = {}) => {
   return new Promise((resolve, reject) => {
     compiler.run((err, stats) => {
       if (err) reject(err)
-      if (stats.hasErrors()) reject(new Error(stats.toJson().errors))
+      if (stats.hasErrors()) reject(new Error(...stats.toJson().errors))
 
       resolve(stats)
     })
