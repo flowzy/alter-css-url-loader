@@ -1,8 +1,8 @@
 import fs from 'fs'
 import path from 'path'
-import webpack from 'webpack'
 
 import compiler from './setup/compiler'
+import { getError } from '../src/config/errors'
 
 const getExpectedResult = (name: string): string => {
   return JSON.stringify(
@@ -10,9 +10,15 @@ const getExpectedResult = (name: string): string => {
   )
 }
 
-const compile = async (options?: alterCssUrlLoader.Options): Promise<string> => {
-  const stats = (await compiler('sample.css', options)) as webpack.Stats
-  return stats.toJson().modules[0].source
+const expectations = {
+  reddit: getExpectedResult('reddit'),
+  alter: getExpectedResult('alter'),
+}
+
+const compile = async (options?: alterCssUrlLoader.Options): Promise<string | Buffer> => {
+  const stats = await compiler('sample.css', options)
+
+  return stats.toJson({ source: true }).modules[0].source
 }
 
 describe('compilation', () => {
@@ -21,7 +27,7 @@ describe('compilation', () => {
       compile({
         reddit: true,
       })
-    ).resolves.toMatch(getExpectedResult('reddit'))
+    ).resolves.toMatch(expectations.reddit)
   })
 
   it('alters url() parameters based on the provided function', async () => {
@@ -29,22 +35,30 @@ describe('compilation', () => {
       compile({
         alter: (url) => url.replace('../', '../../'),
       })
-    ).resolves.toMatch(getExpectedResult('alter'))
+    ).resolves.toMatch(expectations.alter)
   })
 })
 
 describe('option usage', () => {
   it('fails when no options are provided', async () => {
-    await expect(compile()).rejects.toThrow()
+    await expect(compile()).rejects.toMatch(getError('noOptions'))
   })
 
-  it('fails when both "alter" and "reddit" options are truthy', async () => {
+  it('fails when both "alter" and "reddit" options are set', async () => {
     await expect(
       compile({
         reddit: true,
         alter: () => 'should not work',
       })
-    ).rejects.toThrow()
+    ).rejects.toMatch(getError('alterWithReddit'))
+  })
+
+  it('fails if "alter" is provided and not a function', async () => {
+    await expect(
+      compile({
+        alter: null,
+      })
+    ).rejects.toBeTruthy()
   })
 
   it('allows to use "reddit" together with "alter", if "reddit" is set to "false"', async () => {
@@ -53,6 +67,6 @@ describe('option usage', () => {
         reddit: false,
         alter: (url) => url.replace('../', '../../'),
       })
-    ).resolves.toMatch(getExpectedResult('alter'))
+    ).resolves.toMatch(expectations.alter)
   })
 })

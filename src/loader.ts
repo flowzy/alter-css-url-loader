@@ -1,20 +1,18 @@
 import { getOptions } from 'loader-utils'
-import validateOptions from 'schema-utils'
-import { JSONSchema4 } from 'schema-utils/declarations/validate'
+import { validate } from 'schema-utils'
+import type { JSONSchema4 } from 'schema-utils/declarations/validate'
 
 import config from '../package.json'
-import errors from './config/errors'
+import { getError } from './config/errors'
 import schema from './schema.json'
 
 export default function loader(content: string): string {
   const options = getOptions(this) as alterCssUrlLoader.Options
 
-  validateOptions(schema as JSONSchema4, options, { name: config.name })
+  validate(schema as JSONSchema4, options, { name: config.name })
 
-  let usingBuiltInAlter = false
-
-  if (typeof options.alter !== 'function' && options.reddit !== true && !usingBuiltInAlter) {
-    throw new TypeError(errors.alterMustBeFunction(typeof options.alter))
+  if (typeof options.alter === 'undefined' && typeof options.reddit === 'undefined') {
+    throw new Error(getError('noOptions'))
   }
 
   // collect all url()s
@@ -24,7 +22,9 @@ export default function loader(content: string): string {
   // provide a built-in "alter" function for
   // readying urls for Reddit
   if (options.reddit === true) {
-    if (typeof options.alter === 'function') throw new TypeError(errors.alterWithReddit())
+    if (typeof options.alter === 'function') {
+      throw new Error(getError('alterWithReddit'))
+    }
 
     options.alter = (url) => {
       const filename = url.substr(url.lastIndexOf('/') + 1)
@@ -32,9 +32,6 @@ export default function loader(content: string): string {
 
       return `%%${name}%%`
     }
-
-    // avoid a conflict in rebuilds
-    usingBuiltInAlter = true
   }
 
   urls.map((url) => {

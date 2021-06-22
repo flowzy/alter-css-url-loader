@@ -23,16 +23,10 @@ Allows for a more custom altering of CSS's `url()` paths.
 To begin, you'll need to install `alter-css-url-loader`:
 
 ```bash
-$ npm install alter-css-url-loader webpack --save-dev
+$ npm install alter-css-url-loader webpack@^5 --save-dev
 ```
 
-or
-
-```bash
-$ yarn add alter-css-url-loader webpack --dev
-```
-
-Chain the `alter-css-url-loader` directly after [sass-loader](https://github.com/webpack-contrib/sass-loader), if you're using Sass.
+Loader must be chained directly after [sass-loader](https://github.com/webpack-contrib/sass-loader) or similar.
 
 ## Example
 
