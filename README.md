@@ -26,13 +26,7 @@ To begin, you'll need to install `alter-css-url-loader`:
 $ npm install alter-css-url-loader webpack --save-dev
 ```
 
-or
-
-```bash
-$ yarn add alter-css-url-loader webpack --dev
-```
-
-Chain the `alter-css-url-loader` directly after [sass-loader](https://github.com/webpack-contrib/sass-loader), if you're using Sass.
+Loader must be chained directly after [sass-loader](https://github.com/webpack-contrib/sass-loader) or similar.
 
 ## Example
 
