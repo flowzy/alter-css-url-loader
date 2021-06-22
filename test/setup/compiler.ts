@@ -1,11 +1,11 @@
 import path from 'path'
 import webpack from 'webpack'
-import MemoryFileSystem from 'memory-fs'
+import { createFsFromVolume, Volume } from 'memfs'
 
-export default (
+export default function compiler(
   fixture: string,
   options = {} as alterCssUrlLoader.Options
-): Promise<Error | webpack.Stats> => {
+): Promise<webpack.Stats> {
   const compiler = webpack({
     context: __dirname,
     entry: `../css/${fixture}`,
@@ -35,12 +35,13 @@ export default (
     },
   })
 
-  compiler.outputFileSystem = new MemoryFileSystem()
+  compiler.outputFileSystem = createFsFromVolume(new Volume())
+  compiler.outputFileSystem.join = path.join.bind(path)
 
   return new Promise((resolve, reject) => {
     compiler.run((err, stats) => {
       if (err) reject(err)
-      if (stats.hasErrors()) reject(new Error(...stats.toJson().errors))
+      if (stats.hasErrors()) reject(stats.toJson().errors[0].message)
 
       resolve(stats)
     })

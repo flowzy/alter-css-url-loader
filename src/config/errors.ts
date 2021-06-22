@@ -1,13 +1,13 @@
 import { message } from './helpers'
 
-const errors: alterCssUrlLoader.Errors = {}
-const messages: alterCssUrlLoader.Messages = {
+const messages = {
+  noOptions:
+    'options are required. Please provide an "alter" function or set "reddit" option to `true`',
   alterWithReddit: 'cannot use property "reddit" together with "alter".',
-  alterMustBeFunction: 'property "alter" inside of "options" must be a function - %s given.',
 }
 
-Object.entries(messages).map(
-  ([key, value]) => (errors[key] = (...args: string[]): string => message(value, args))
-)
+type ErrorName = keyof typeof messages
 
-export default errors
+export function getError(name: ErrorName, ...args: string[]): string {
+  return message(messages[name], args)
+}
