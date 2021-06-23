@@ -7,6 +7,16 @@ import { getError } from './config/errors'
 import schema from './schema.json'
 import type { Options } from '../types/loader'
 
+// for when the usage of the plugin is for reddit,
+// provide a built-in "alter" function for
+// readying urls for Reddit
+function builtInAlter(url: string): string {
+  const filename = url.substr(url.lastIndexOf('/') + 1)
+  const name = filename.substr(0, filename.lastIndexOf('.'))
+
+  return `%%${name}%%`
+}
+
 export default function loader(content: string): string {
   const defaultOptions = {
     enabled: ['production', 'test'].includes(process.env.NODE_ENV),
@@ -27,18 +37,6 @@ export default function loader(content: string): string {
     throw new Error(getError('alterWithReddit'))
   }
 
-  // for when the usage of the plugin is for reddit,
-  // provide a built-in "alter" function for
-  // readying urls for Reddit
-  if (options.reddit === true) {
-    options.alter = (url) => {
-      const filename = url.substr(url.lastIndexOf('/') + 1)
-      const name = filename.substr(0, filename.lastIndexOf('.'))
-
-      return `%%${name}%%`
-    }
-  }
-
   // collect all url()s
   const urls = content.match(/url\(.*?\)/gi)
 
@@ -46,11 +44,14 @@ export default function loader(content: string): string {
     return content
   }
 
-  urls.map((url) => {
+  urls.forEach((url) => {
     // remove url() from the match and leave only the path itself
     const stripped = url.replace(/^url\(/, '').replace(/\)$/, '')
 
-    content = content.replace(stripped, options.alter(stripped))
+    content = content.replace(
+      stripped,
+      options.reddit ? builtInAlter(stripped) : options.alter(stripped)
+    )
   })
 
   return content
