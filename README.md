@@ -1,7 +1,11 @@
-<div align="center">
+<div style="text-align: center">
   <a href="https://github.com/webpack/webpack">
-    <img width="200" height="200"
-      src="https://webpack.js.org/assets/icon-square-big.svg">
+    <img
+      width="200"
+      height="200"
+      src="https://webpack.js.org/assets/icon-square-big.svg"
+      alt="Webpack"
+    />
   </a>
 
 <!-- prettier-ignore -->
@@ -70,6 +74,14 @@ module.exports = {
 
 ## Options
 
+### `enabled`
+
+Type: `Boolean`
+
+Default: `true` if `NODE_ENV` is either `production` or `test`
+
+Enables or disables the loader.
+
 ### `alter`
 
 Type: `Function`
@@ -80,7 +92,7 @@ Alters each and every url given to it. This function should return a `String`.
 
 Type: `Boolean`
 
-Determines whether a built-in function for transforming urls for Reddit should be used.
+Determines whether to use the built-in function for transforming CSS `url()` to comply with Reddit's syntax.
 
 Example: `./img/headers/header-1.jpg` => `%%header-1%%`
 

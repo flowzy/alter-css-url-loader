@@ -6,6 +6,9 @@
     },
     "alter": {
       "instanceof": "Function"
+    },
+    "enabled": {
+      "type": "boolean"
     }
   },
   "additionalProperties": false
