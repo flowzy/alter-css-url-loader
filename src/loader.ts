@@ -15,9 +15,6 @@ export default function loader(content: string): string {
     throw new Error(getError('noOptions'))
   }
 
-  // collect all url()s
-  const urls = content.match(/url\(.*?\)/gi)
-
   // for when the usage of the plugin is for reddit,
   // provide a built-in "alter" function for
   // readying urls for Reddit
@@ -32,6 +29,13 @@ export default function loader(content: string): string {
 
       return `%%${name}%%`
     }
+  }
+
+  // collect all url()s
+  const urls = content.match(/url\(.*?\)/gi)
+
+  if (!urls) {
+    return content
   }
 
   urls.map((url) => {
